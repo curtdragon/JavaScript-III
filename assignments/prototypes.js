@@ -68,11 +68,37 @@ Humanoid.prototype.greet = function () {
 
 
 /*
- === Heroes and Villians (Greater stats than the regular units)===
-  * entrance greeting returns the string 'I am 
+ === Heroes and Villains (Greater stats than the regular units)===
+  * entranceGreeting returns the string 'I am here to save the world' for villains  
+  or 'I am here to detroy the world for heroes'
+  *catchPhrase Heroes and Villains have their own catchphrases
+  *heroes have more health
+  *villains have more damage
 
 */
- 
+
+function Hero(leader) {
+  Humanoid.call(this, leader);
+  this.healhPoints = leader.healthPoints;
+  this.attackDamage = leader.attackDamage;
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.catchPhrase = function () {
+  return `I am ${this.name} and I am Jedi like my father before me!`;
+}
+
+function Villain(leader) {
+  Humanoid.call(this, leader);
+  this.healthPoints = leader.healthPoints;
+  this.attackDamage = leader.attackDamage;
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+Villain.prototype.catchPhrase = function () {
+  return `I am ${this.name} and I am your father. Search your heart, you know this to be true!`;
+}
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -88,7 +114,7 @@ Humanoid.prototype.greet = function () {
       width: 1,
       height: 1,
     },
-    healthPoints: 5,
+    healthPoints: 50,
     name: 'Bruce',
     team: 'Mage Guild',
     weapons: [
@@ -104,7 +130,7 @@ Humanoid.prototype.greet = function () {
       width: 2,
       height: 2,
     },
-    healthPoints: 15,
+    healthPoints: 150,
     name: 'Sir Mustachio',
     team: 'The Round Table',
     weapons: [
@@ -121,7 +147,7 @@ Humanoid.prototype.greet = function () {
       width: 2,
       height: 4,
     },
-    healthPoints: 10,
+    healthPoints: 100,
     name: 'Lilith',
     team: 'Forest Kingdom',
     weapons: [
@@ -130,6 +156,43 @@ Humanoid.prototype.greet = function () {
     ],
     language: 'Elvish',
   });
+
+  const sith = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 3,
+      height: 5,
+    },
+    healthPoints: 500,
+    name: 'Darth Vader',
+    team: 'Galactic Empire',
+    weapons: [
+      'The Force',
+      'Light Saber',
+    ],
+    language: 'English',
+    attackDamage: 5,
+  });
+
+  const jedi = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 3,
+      height: 4,
+    },
+    healthPoints: 800,
+    name: 'Luke Skywalker',
+    team: 'Jedi Order',
+    weapons: [
+      'The Force',
+      'Light Saber',
+      'Blaster Pistol',
+    ],
+    language: 'English',
+    attackDamage: 3,
+  })
 
   console.log("Mage Created at: ",mage.createdAt); // Today's date
   console.log("Archer Dimensions: ",archer.dimensions); // { length: 1, width: 2, height: 4 }
@@ -141,6 +204,11 @@ Humanoid.prototype.greet = function () {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  console.log(sith.weapons);
+  console.log(jedi.attackDamage);
+  console.log(sith.catchPhrase());
+  console.log(jedi.catchPhrase());
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
